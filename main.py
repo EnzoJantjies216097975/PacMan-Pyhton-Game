@@ -1,40 +1,27 @@
-import pygame
-import random
-from enum import Enum
-from typing import List, Tuple, Dict
+import pygame, sys
+from settings import WIDTH, HEIGHT, NAV_HEIGHT
+from world import World
 
-class Direction(Enum):
-    UP = (0, -1)
-    DOWN = (0, 1)
-    LEFT = (-1, 0)
-    RIGHT = (1, 0)
-    STOP = (0, 0)
+pygame.init()
+screen = pygame.display.set_mode((WIDTH, HEIGHT + NAV_HEIGHT))
+pygame.display.set_caption("PacMan")
 
-class GameState(Enum):
-    PLAYING = 1
-    PAUSED = 2
-    GAME_OVER = 3
-    LEVEL_COMPLETE = 4
+class Main:
+    def __init__(self, screen):
+        self.screen = screen
+        self.FPS = pygame.time.Clock()
+    def main(self):
+        world = World(self.screen)
+        while True:
+            self.screen.fill("black")
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+            world.update()
+            pygame.display.update()
+            self.FPS.tick(30)
 
-class Entity:
-    def __init__(self, x: int, y: int, speed: float):
-        self.x = x
-        self.y = y
-        self.speed = speed
-        self.direction = Direction.STOP
-        self.next_direction = Direction.STOP
-        self.animation_frame = 0
-        
-    def move(self, walls: List['Wall']):
-        next_x = self.x + self.direction.value[0] * self.speed
-        next_y = self.y + self.direction.value[1] * self.speed
-        
-        if not self.check_collision(next_x, next_y, walls):
-            self.x = next_x
-            self.y = next_y
-            
-    def check_collision(self, x: float, y: float, walls: List['Wall']) -> bool:
-        for wall in walls:
-            if wall.contains_point(x, y):
-                return True
-        return False
+if __name__ == "__main__":
+    play = Main(screen)
+    play.main()
