@@ -46,18 +46,27 @@ def update(self):
                 if berry.power_up:
                     self.player.sprite.immune_time = 150 # Timer based from FPS count
                     self.player.sprite.pac_score += 50
+                    eat_fruit_sound.play()
+                    eat_fruit_sound.set_volume(0.5)
                 else:
                     self.player.sprite.pac_score += 10
+                    chomp_sound.play()
+                    chomp_sound.set_volume(0.5)
                 berry.kill()
         # PacMan bumping into ghosts
         for ghost in self.ghosts.sprites():
             if self.player.sprite.rect.colliderect(ghost.rect):
                 if not self.player.sprite.immune:
+                    death_sound.play()
+                    death_sound.set_volume(0.5)
                     time.sleep(2)
                     self.player.sprite.life -= 1
                     self.reset_pos = True
                     break
                 else:
+                    eat_ghost_sound.play()
+                    eat_ghost_sound.set_volume(0.5)
+                    
                     ghost.move_to_start_pos()
                     self.player.sprite.pac_score += 100
     self._check_game_state()

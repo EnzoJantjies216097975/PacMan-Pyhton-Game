@@ -6,6 +6,15 @@ pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT + NAV_HEIGHT))
 pygame.display.set_caption("PacMan")
 
+pygame.mixer.init()
+
+chomp_sound = pygame.mixer.Sound("assets/audio/chomp.wav")
+eat_ghost_sound = pygame.mixer.Sound("assets/audio/eatghost.wav")
+eat_fruit_sound = pygame.mixer.Sound("assets/audio/eatfruit.wav")
+death_sound = pygame.mixer.Sound("assets/audio/death.wav")
+extra_life_sound = pygame.mixer.Sound("assets/audio/extrapac.wav")
+beginning_sound = pygame.mixer.Sound("assets/audio/beginning.wav")
+
 class Main:
     def __init__(self, screen):
         self.screen = screen
