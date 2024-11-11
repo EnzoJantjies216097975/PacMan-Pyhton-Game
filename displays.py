@@ -7,7 +7,7 @@ pygame.font.init()
 class Display:
     def __init__(self, screen):
         self.screen = screen
-        self.font = pygame.font.pygame.font.SySFont("ubuntumono", CHAR_SIZE)
+        self.font = pygame.font.SysFont("ubuntumono", CHAR_SIZE)
         self.game_over_font = pygame.font.SysFont("dejavusasmono", 48)
         self.text_color = pygame.Color("crimson")
 

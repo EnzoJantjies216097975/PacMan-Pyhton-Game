@@ -5,7 +5,7 @@ from pac import Pac
 from cell import Cell
 from berry import Berry
 from ghost import Ghost
-from display import Display
+from displays import Display
 
 class World:
     def __init__(self, screen):
