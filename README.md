@@ -1,8 +1,6 @@
 # Pac-Man Python Game
 
-
-![d5z4y44-5a033ac4-452f-4518-bab5-61adb388a320.png](assets%2Fd5z4y44-5a033ac4-452f-4518-bab5-61adb388a320.png)
-
+![readme.png](assets%2Freadme.png)
 ##  Table of Contents
 
   -  [About the Project]
