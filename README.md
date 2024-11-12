@@ -1,22 +1,25 @@
 # Pac-Man Python Game
+![alt text](D:\NUST\GitHub\PacMan-Python-Game\assets\d5z4y44-5a033ac4-452f-4518-bab5-61adb388a320.png "Pacman Logo")
 
 ##  Table of Contents
 
-  -  About the Project
-  -  Features
-  -  Installation
-  -  Usage
-  -  Game Mechanics
-  -  How to Play
-  -  Project Structure
-  -  Technologies Used
-  -  Contributing
-  -  License
-  -  Contact
+  -  [About the Project]
+  -  [Features]
+  -  [Installation]
+  -  [Usage]
+  -  [Game Mechanics]
+  -  [How to Play]
+  -  [Project Structure]
+  -  [Technologies Used]
+  -  [Contributing]
+  -  [License]
+  -  [Contact]
+
 
 ## About the Project
 
 The Pac-Man Python Game is a modern rendition of the classic arcade game, developed using Python and Pygame. This project aims to replicate the gameplay of the original Namco Pac-Man game, including unique ghost behaviors, animations, and challenging maze navigation.
+
 
 ## Features
 
@@ -25,6 +28,7 @@ The Pac-Man Python Game is a modern rendition of the classic arcade game, develo
 - <b>Maze Design:</b> Uses 8x8 px tiles to create the maze, allowing for customizable layouts.
 - <b>Collision Detection</b> for walls and ghost interactions.
 - <b>Score Tracking</b> and levels.
+
 
 ## Installation
 
@@ -54,6 +58,7 @@ python main.py
 - Control Pac-Man using the arrow keys on your keyboard.
 - Collect all the pellets and avoid the ghosts to progress through levels.
 
+
 ## Game Mechanics
 
 - <b>Player Movement:</b> Move Pac-Man through the maze using the arrow keys.
@@ -61,6 +66,7 @@ python main.py
 - <b>Power-Ups:</b> Eat power pellets to temporarily turn the tables and chase the ghosts.
 - <b>Teleportation:</b> Use pathways to move from one side of the maze to the other. 
 - <b>Game Over:</b> The game ends when Pac-Man loses all lives.
+
 
 ## How to Play
 
@@ -71,6 +77,7 @@ python main.py
   - <b>Pellets:</b> +10 points each.
   - <b>Power Pellets:</b> +50 points and enables ghost chasing for a short period.
   - <b>Ghosts (when powered up):</b> +200 points each (increases with consecutive captures).
+
 
 ## Project Structure
 
@@ -89,10 +96,12 @@ PacMan-Python-Game/\
 └── world.py             # World/maze generation and wall collision logic
 ```
 
+
 ## Technologies Used
 
 - Python 3.12.7
 - Pygame 1.9.1  (for game development)
+
 
 ## Contributing
 
@@ -104,9 +113,11 @@ Contributions are welcome! Please follow these steps:
 4. Push to the branch (git push origin feature/new-feature).
 5. Open a pull request.
 
+
 ## License
 
 This project is licensed under the MIT License.
+
 
 # Contact
 
