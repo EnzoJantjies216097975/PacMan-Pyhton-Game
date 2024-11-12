@@ -3,17 +3,17 @@
 ![readme.png](assets%2Freadme.png)
 ##  Table of Contents
 
-  -  [About the Project]
-  -  [Features]
-  -  [Installation]
-  -  [Usage]
-  -  [Game Mechanics]
-  -  [How to Play]
-  -  [Project Structure]
-  -  [Technologies Used]
-  -  [Contributing]
-  -  [License]
-  -  [Contact]
+  -  About the Project
+  -  Features
+  -  Installation
+  -  Usage
+  -  Game Mechanics
+  -  How to Play
+  -  Project Structure
+  -  Technologies Used
+  -  Contributing
+  -  License
+  -  Contact
 
 
 ## About the Project
