@@ -3,35 +3,36 @@ import time
 from settings import HEIGHT, WIDTH, NAV_HEIGHT, CHAR_SIZE, MAP, PLAYER_SPEED
 from pac import Pac
 from cell import Cell
-from berry import Berry
+from pellet import Pellet
 from ghost import Ghost
 from displays import Display
 
+# The main class that represents the game world
 class World:
     def __init__(self, screen):
-        self.screen = screen
-        self.player = pygame.sprite.GroupSingle()
-        self.ghosts = pygame.sprite.Group()
-        self.walls = pygame.sprite.Group()
-        self.berries = pygame.sprite.Group()
-        self.display = Display(self.screen)
-        self.game_over = False
-        self.reset_pos = False
-        self.player_score = 0
-        self.game_level = 1
-        self._generate_world()
+        self.screen = screen                                                            # The game screen to draw on
+        self.player = pygame.sprite.GroupSingle()                                       # A group that holds a single sprite, for PacMan
+        self.ghosts = pygame.sprite.Group()                                             # A group to hold all wall sprites
+        self.walls = pygame.sprite.Group()                                              # A group to hold all pellet sprites 
+        self.berries = pygame.sprite.Group()                                            # Display object for showing game information
+        self.display = Display(self.screen)                                             # Flag to track if the game is over
+        self.game_over = False                                                          # Flag for resetting positions after PacMan is caught
+        self.reset_pos = False                                                          # The player's score
+        self.player_score = 0                                                           # The current game level
+        self.game_level = 1                                                             # Method to set up the initial game map
+        self._generate_world()                                                          
 
-        # create and add player to the screen
+    # Generates the game world based on a predefined map layout
     def _generate_world(self):
-        # renders obstacle from the MAP table
+       # Loop through each row and column of the map
         for y_index, col in enumerate(MAP):
             for x_index, char in enumerate(col):
-                if char == "1":	# for walls
+                if char == "1":                                                          # Represents a wall on the map
                     self.walls.add(Cell(x_index, y_index, CHAR_SIZE, CHAR_SIZE))
-                elif char == " ":	 # for paths to be filled with berries
-                    self.berries.add(Berry(x_index, y_index, CHAR_SIZE // 4))
-                elif char == "B":	# for big berries
-                    self.berries.add(Berry(x_index, y_index, CHAR_SIZE // 2, is_power_up=True))
+                elif char == " ":	                                                     # Represents an empty path where berries should be placed# for paths to be filled with berries
+                    self.berries.add(Pellet(x_index, y_index, CHAR_SIZE // 7))
+                elif char == "B":	                                                       # Represents a big berry (power-up)
+                    self.berries.add(Pellet(x_index, y_index, CHAR_SIZE // 4, is_power_up=True))
                 # for Ghosts's starting position
                 elif char == "s":
                     self.ghosts.add(Ghost(x_index, y_index, "skyblue"))
@@ -50,9 +51,9 @@ class World:
         for y_index, col in enumerate(MAP):
             for x_index, char in enumerate(col):
                 if char == " ":	 # for paths to be filled with berries
-                    self.berries.add(Berry(x_index, y_index, CHAR_SIZE // 4))
-                elif char == "B":	# for big berries
-                    self.berries.add(Berry(x_index, y_index, CHAR_SIZE // 2, is_power_up=True))
+                    self.berries.add(Pellet(x_index, y_index, CHAR_SIZE // 2))
+                elif char == "B":# for big berries
+                    self.berries.add(Pellet(x_index, y_index, CHAR_SIZE // 3, is_power_up=True))
         time.sleep(2)
 
     def restart_level(self):
@@ -100,15 +101,15 @@ class World:
                 self.player.sprite.rect.x = WIDTH
             elif self.player.sprite.rect.left >= WIDTH:
                 self.player.sprite.rect.x = 0
-            # PacMan eating-berry effect
-            for berry in self.berries.sprites():
-                if self.player.sprite.rect.colliderect(berry.rect):
-                    if berry.power_up:
+            # PacMan eating-pellet effect
+            for pellet in self.berries.sprites():
+                if self.player.sprite.rect.colliderect(pellet.rect):
+                    if pellet.power_up:
                         self.player.sprite.immune_time = 150 # Timer based from FPS count
                         self.player.sprite.pac_score += 50
                     else:
                         self.player.sprite.pac_score += 10
-                    berry.kill()
+                    pellet.kill()
             # PacMan bumping into ghosts
             for ghost in self.ghosts.sprites():
                 if self.player.sprite.rect.colliderect(ghost.rect):
@@ -123,7 +124,7 @@ class World:
         self._check_game_state()
         # rendering
         [wall.update(self.screen) for wall in self.walls.sprites()]
-        [berry.update(self.screen) for berry in self.berries.sprites()]
+        [pellet.update(self.screen) for pellet in self.berries.sprites()]
         [ghost.update(self.walls_collide_list) for ghost in self.ghosts.sprites()]
         self.ghosts.draw(self.screen)
         self.player.update()
