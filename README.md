@@ -1,5 +1,7 @@
 # Pac-Man Python Game
-![alt text](D:\NUST\GitHub\PacMan-Python-Game\assets\d5z4y44-5a033ac4-452f-4518-bab5-61adb388a320.png "Pacman Logo")
+
+
+![d5z4y44-5a033ac4-452f-4518-bab5-61adb388a320.png](assets%2Fd5z4y44-5a033ac4-452f-4518-bab5-61adb388a320.png)
 
 ##  Table of Contents
 
