@@ -30,16 +30,22 @@ The Pac-Man Python Game is a modern rendition of the classic arcade game, develo
 
    1. <b>Clone the repository:</b>
 
->git clone https://github.com/yourusername/pacman-python-game.git
-> 
->cd pacman-python-game
+```bash
+git clone https://github.com/yourusername/pacman-python-game.git
+ 
+cd pacman-python-game
+```
 
   2. <b>Install dependencies:</b> Ensure you have Python installed. Install pygame via:
 
->pip install pygame
+```bash
+pip install pygame
+```
 
 3.  Run the game:
->python main.py
+```bash
+python main.py
+````
 
 
 ## Usage
@@ -68,18 +74,20 @@ The Pac-Man Python Game is a modern rendition of the classic arcade game, develo
 
 ## Project Structure
 
-> -  PacMan-Python-Game/\
-> -  │
-> -  ├── assets/              # Game assets such as images and sound
-> -  ├── ghosts/ 
-> - │   ├── pacman/ 
-> - │   └── tiles/ 
-> - │ 
-> - ├── main.py              # Main game loop 
-> - ├── ghost.py             # Ghost class and logic 
-> - ├── pacman.py            # Pac-Man player logic 
-> - ├── settings.py          # Game settings and constants
-> - └── world.py             # World/maze generation and wall collision logic
+```
+PacMan-Python-Game/\
+│
+├── assets/              # Game assets such as images and sound
+├── ghosts/ 
+│   ├── pacman/ 
+│   └── tiles/ 
+│ 
+├── main.py              # Main game loop 
+├── ghost.py             # Ghost class and logic 
+├── pacman.py            # Pac-Man player logic 
+├── settings.py          # Game settings and constants
+└── world.py             # World/maze generation and wall collision logic
+```
 
 ## Technologies Used
 
