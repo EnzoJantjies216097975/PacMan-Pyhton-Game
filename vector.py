@@ -59,7 +59,7 @@ class Vector2(object):
 
     # This function returns the vectors as a tuple of integers (rounded down)
     def asInt(self):
-        return int(self.x), int(self)
+        return int(self.x), int(self.y)
 
     # This function returns a string representation of the vector for printing
     def __str__(self):

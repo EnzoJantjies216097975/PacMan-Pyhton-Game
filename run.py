@@ -2,6 +2,8 @@ import pygame
 from pygame.locals import *
 from constants import *
 from pacman import Pacman
+from nodes import NodeGroup
+
 
 # GameController manages the game's setup, events, updates, and rendering
 class GameController(object):
@@ -23,8 +25,10 @@ class GameController(object):
 
     # Starts the game by setting the background and creating Pac-Man
     def startGame(self):
-        self.setBackground()            # Set up the background
-        self.pacman = Pacman()          # Create a Pac-Man instance
+        self.setBackground()                            # Set up the background
+        self.nodes = NodeGroup()
+        self.nodes.setupTestNodes()
+        self.pacman = Pacman(self.nodes.nodeList[0])    # Create a Pac-Man instance
 
     # Handles updating the game each frame
     def update(self):
@@ -44,6 +48,7 @@ class GameController(object):
     # Draw everything to the screen
     def render(self):
         self.screen.blit(self.background, (0,0))    # First, draw the background onto the screen
+        self.nodes.render(self.screen)
         self.pacman.render(self.screen)                 # Then, draw Pac-Man on top of the background
         pygame.display.update()                         # Update the display to show the new frame
 

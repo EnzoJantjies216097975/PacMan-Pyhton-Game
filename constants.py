@@ -13,10 +13,11 @@ SCREENHEIGHT = NROWS*TILEHEIGHT
 # Screen size as a tuple (width, height)
 SCREENSIZE = (SCREENWIDTH, SCREENHEIGHT)
 
-# RGB color representation for black (no color/light)
+# RGB color representation for colors
 BLACK = (0, 0, 0)
-# RGB color representation for yellow (used for certain game elements)
+WHITE = (255, 255, 255)
 YELLOW = (255, 255, 0)
+RED = (255, 0, 0)
 
 # Movement constants to represent directions:
 STOP = 0    # Represents no movement
