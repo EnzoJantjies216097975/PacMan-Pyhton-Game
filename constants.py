@@ -1,3 +1,5 @@
+# This file stores all the fixed values used throughout the game
+
 # Width of each tile in the game grid (measured in pixels)
 TILEWIDTH = 16
 # Height of each tile in the game grid (measured in pixels)

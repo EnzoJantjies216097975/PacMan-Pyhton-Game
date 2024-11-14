@@ -1,3 +1,5 @@
+# This file handles all the math for moving things around in the game
+
 import math
 
 # Class to represent a 2D vector with basic vector operations

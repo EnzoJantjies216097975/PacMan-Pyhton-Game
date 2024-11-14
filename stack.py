@@ -1,4 +1,14 @@
 # This class represents a stack (LIFO)
+# stack.py - This file defines a way to store and manage a list of items
+# Think of it like a stack of plates - you can only add or remove from the top
+
+"""
+    A Stack is like a pile of items where:
+    - New items go on top (push)
+    - You can only take items from the top (pop)
+    - You can look at the top item without taking it (peek)
+"""
+
 class Stack(object):
     # Constructor function to create an empty stack
     def __init__(self):
