@@ -36,6 +36,11 @@ class Pacman(object):
         # self.node = self.getNewTarget(direction)
         # self.setPosition()
         if self.overshotTarget():
+            if self.target is not None:
+                vec1 = self.target.position - self.node.position
+
+                
+
             self.node = self.target
             self.target = self.getNewTarget(direction)
             if self.target is not self.node:
