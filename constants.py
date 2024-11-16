@@ -27,6 +27,9 @@ UP = 1      # Represents movement upward
 DOWN = -1   # Represents movement downward
 LEFT = 2    # Represents movement to the left
 RIGHT = -2  # Represents movement to the right
+PORTAL = 3  # Represntes portal
 
 # Constant to identify Pac-Man
 PACMAN = 0
+PEllET = 1
+POWERPELLET = 2

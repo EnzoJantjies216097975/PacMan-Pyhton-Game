@@ -3,7 +3,6 @@ from pygame.locals import *
 from vector import Vector2
 from constants import *
 
-
 # Define the Pacman class, which will control Pac-Man's properties and behavior
 class Pacman(object):
     def __init__(self, node):
@@ -30,24 +29,14 @@ class Pacman(object):
     # Update Pac-Man's position based on time passed and current direction
     def update(self, dt):
         self.position += self.directions[self.direction]*self.speed*dt     # Adjust position by moving in the current direction with speed and time (dt)
-        # Get any valid key (if pressed) to update the direction
         direction = self.getValidKey()
-        # self.direction = direction
-        # self.node = self.getNewTarget(direction)
-        # self.setPosition()
         if self.overshotTarget():
-            if self.target is not None:
-                vec1 = self.target.position - self.node.position
-
-                
-
             self.node = self.target
+            if self.node.neighbors[PORTAL] is not None:
+                self.node = self.node.neighbors[PORTAL]
             self.target = self.getNewTarget(direction)
             if self.target is not self.node:
                 self.direction = direction
-            #else:
-            #    self.direction = STOP
-            #    self.setPosition()
             else:
                 self.target = self.getNewTarget(self.direction)
 

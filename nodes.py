@@ -1,7 +1,9 @@
 # This file handles the points where Pac-Man can move and turn
 import pygame
+import numpy as np
 from vector import Vector2
 from constants import *
+
 
 """
 A Node is like an intersection in the game maze.
@@ -19,7 +21,8 @@ class Node(object):
             UP:None,
             DOWN:None,
             LEFT:None,
-            RIGHT:None
+            RIGHT:None,
+            PORTAL: None
         }
 
     def render(self, screen):
@@ -41,44 +44,89 @@ It's like a map that keeps track of all intersections
 and how they connect to each other.
 """
 class NodeGroup(object):
-    def __init__(self):
+    def __init__(self, level):
         # Create an empty list to store all our nodes
-        self.nodeList = []
+        self.level = level
+        self.nodesLUT = {}
+        self.nodeSymbols = ['+', 'p', 'n']
+        self.pathSymbols = ['.', '-', '/', 'p']
+        data = self.readMazeFile(level)
+        self.createNodeTable(data)
+        self.connectHorizontally(data)
+        self.connectVertically(data)
 
-    # Store all nodes in our list so we can work with them later
-    def setupTestNodes(self):
-        # Create a test maze layout with connected nodes
-        # First, create all the nodes
-        nodeA = Node(80, 80)
-        nodeB = Node(160, 80)
-        nodeC = Node(80, 160)
-        nodeD = Node(160, 160)
-        nodeE = Node(208, 160)
-        nodeF = Node(80, 320)
-        nodeG = Node(208, 320)
+    # Reading the Text File
+    def readMazeFile(self, textfile):
+        return np.loadtxt(textfile, dtype='<U1')
 
-        # Then connect the nodes to create paths
-        # Each connection is made both ways (if A connects to B, B connects to A)
+    # Create Node Table
+    def createNodeTable(self, data, xoffset=0, yoffset=0):
+        for row in list(range(data.shape[0])):
+            for col in list(range(data.shape[1])):
+                if data[row][col] in self.nodeSymbols:
+                    x, y = self.constructKey(col+xoffset, row+yoffset)
+                    self.nodesLUT[(x, y)] = Node(x, y)
 
-        nodeA.neighbors[RIGHT] = nodeB
-        nodeA.neighbors[DOWN] = nodeC
-        nodeB.neighbors[LEFT] = nodeA
-        nodeB.neighbors[DOWN] = nodeD
-        nodeC.neighbors[UP] = nodeA
-        nodeC.neighbors[RIGHT] = nodeD
-        nodeC.neighbors[DOWN] = nodeF
-        nodeD.neighbors[UP] = nodeB
-        nodeD.neighbors[LEFT] = nodeC
-        nodeD.neighbors[RIGHT] = nodeE
-        nodeE.neighbors[LEFT] = nodeD
-        nodeE.neighbors[DOWN] = nodeG
-        nodeF.neighbors[UP] = nodeC
-        nodeF.neighbors[RIGHT] = nodeG
-        nodeG.neighbors[UP] = nodeE
-        nodeG.neighbors[LEFT] = nodeF
-        self.nodeList = [nodeA, nodeB, nodeC, nodeD, nodeE, nodeF, nodeG]
+    def constructKey(self, x, y):
+        return x * TILEWIDTH, y * TILEHEIGHT
+
+    #Connet Nodes Horizontally
+    def connectHorizontally(self, data, xoffset=0, yoffset=0):
+        for row in list(range(data.shape[0])):
+            key = None
+            for col in list(range(data.shape[1])):
+                if data[row][col] in self.nodeSymbols:
+                    if key is None:
+                        key = self.constructKey(col+xoffset, row+yoffset)
+                    else:
+                        otherkey = self.constructKey(col+xoffset, row+yoffset)
+                        self.nodesLUT[key].neighbors[RIGHT] = self.nodesLUT[otherkey]
+                        self.nodesLUT[otherkey].neighbors[LEFT] = self.nodesLUT[key]
+                        key = otherkey
+                elif data[row][col] not in self.pathSymbols:
+                    key = None
+
+        # Connet Nodes Vertically
+    def connectVertically(self, data, xoffset=0, yoffset=0):
+        dataT = data.transpose()
+        for col in list(range(dataT.shape[0])):
+            key = None
+            for row in list(range(dataT.shape[1])):
+                if dataT[col][row] in self.nodeSymbols:
+                    if key is None:
+                        key = self.constructKey(col + xoffset, row + yoffset)
+                    else:
+                        otherkey = self.constructKey(col + xoffset, row + yoffset)
+                        self.nodesLUT[key].neighbors[DOWN] = self.nodesLUT[otherkey]
+                        self.nodesLUT[otherkey].neighbors[UP] = self.nodesLUT[key]
+                        key = otherkey
+                elif dataT[col][row] not in self.pathSymbols:
+                    key = None
+
+    def getNodeFromPixels(self, xpixel, ypixel):
+        if (xpixel, ypixel) in self.nodesLUT.keys():
+            return self.nodesLUT[(xpixel, ypixel)]
+        return None
+
+    def getNodeFromTiles(self, col, row):
+        x, y = self.constructKey(col, row)
+        if (x, y) in self.nodesLUT.keys():
+            return self.nodesLUT[(x, y)]
+        return None
+
+    # Pacman start node (temporary)
+    def getStartTempNode(self):
+        nodes = list(self.nodesLUT.values())
+        return nodes[0]
+
+    def setPortalPair(self, pair1, pair2):
+        key1 = self.constructKey(*pair1)
+        key2 = self.constructKey(*pair2)
+        if key1 in self.nodesLUT.keys() and key2 in self.nodesLUT.keys():
+            self.nodesLUT[key1].neighbors[PORTAL] = self.nodesLUT[key2]
+            self.nodesLUT[key2].neighbors[PORTAL] = self.nodesLUT[key1]
 
     def render(self, screen):
         # Draw all nodes and their connections
-        for node in self.nodeList:
+        for node in self.nodesLUT.values():
             node.render(screen)

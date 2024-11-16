@@ -3,52 +3,48 @@ from pygame.locals import *
 from constants import *
 from pacman import Pacman
 from nodes import NodeGroup
-
+from pellets import PelletGroup
 
 # GameController manages the game's setup, events, updates, and rendering
 class GameController(object):
     def __init__(self):
-        # Initialize pygame (sets up everything we need to use pygame)
-        pygame.init()
-        # Create the game screen with a fixed size from constants
-        self.screen = pygame.display.set_mode(SCREENSIZE, 0, 32)
-        # Initialize background and clock attributes
-        self.background = None
-        self.clock = pygame.time.Clock()    # Tracks time to control game speed
+        pygame.init()                                                          # Initialize pygame (sets up everything we need to use pygame)
+        self.screen = pygame.display.set_mode(SCREENSIZE, 0, 32)    # Create the game screen with a fixed size from constants
+        self.background = None                                                  # Initialize background and clock attributes
+        self.clock = pygame.time.Clock()                                        # Initialize clock attributes / Tracks time to control game speed
 
     # Sets up a black background surface for the game
     def setBackground(self):
-        # Create a blank surface matching the screen size
-        self.background = pygame.surface.Surface(SCREENSIZE).convert()
-        # Fill the background with the color black
-        self.background.fill(BLACK)
+        self.background = pygame.surface.Surface(SCREENSIZE).convert()      # Create a blank surface matching the screen size
+        self.background.fill(BLACK)                                         # Fill the background with the color black
 
     # Starts the game by setting the background and creating Pac-Man
     def startGame(self):
         self.setBackground()                            # Set up the background
-        self.nodes = NodeGroup()
-        self.nodes.setupTestNodes()
-        self.pacman = Pacman(self.nodes.nodeList[0])    # Create a Pac-Man instance
+        self.nodes = NodeGroup("maze1.txt")
+        self.nodes.setPortalPair((0,17), (27,17))
+        self.pacman = Pacman(self.nodes.getStartTempNode())    # Create a Pac-Man instance
+        self.pellets = PelletGroup("maze1.txt")
 
     # Handles updating the game each frame
     def update(self):
-        # Control the frame rate; `dt` is the time in seconds since the last frame
-        dt = self.clock.tick(30) / 1000.0
-        self.pacman.update(dt)          # Update Pac-Man's position based on `dt`
-        self.checkEvents()              # Check for user inputs or quit events
-        self.render()                   # Render all elements on the screen
+        dt = self.clock.tick(30) / 1000.0   # Control the frame rate; `dt` is the time in seconds since the last frame
+        self.pacman.update(dt)              # Update Pac-Man's position based on `dt`
+        self.pellets.update(dt)
+        self.checkEvents()                  # Check for user inputs or quit events
+        self.render()                       # Render all elements on the screen
 
     # Check for any events, like closing the game window
     def checkEvents(self):
-        # Go through all events (e.g., key presses, closing the window)
-        for event in pygame.event.get():
-            if event.type == QUIT:      # If the quit event is detected, exit the game
+        for event in pygame.event.get():    # Go through all events (e.g., key presses, closing the window)
+            if event.type == QUIT:          # If the quit event is detected, exit the game
                 exit()
 
     # Draw everything to the screen
     def render(self):
         self.screen.blit(self.background, (0,0))    # First, draw the background onto the screen
         self.nodes.render(self.screen)
+        self.pellets.render(self.screen)
         self.pacman.render(self.screen)                 # Then, draw Pac-Man on top of the background
         pygame.display.update()                         # Update the display to show the new frame
 
