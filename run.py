@@ -31,6 +31,7 @@ class GameController(object):
         dt = self.clock.tick(30) / 1000.0   # Control the frame rate; `dt` is the time in seconds since the last frame
         self.pacman.update(dt)              # Update Pac-Man's position based on `dt`
         self.pellets.update(dt)
+        self.checkPelletEvents()
         self.checkEvents()                  # Check for user inputs or quit events
         self.render()                       # Render all elements on the screen
 
@@ -39,6 +40,12 @@ class GameController(object):
         for event in pygame.event.get():    # Go through all events (e.g., key presses, closing the window)
             if event.type == QUIT:          # If the quit event is detected, exit the game
                 exit()
+
+    def checkPelletEvents(self):
+        pellet = self.pacman.eatPellets(self.pellets.pelletList)
+        if pellet:
+            self.pellets.numEaten += 1
+            self.pellets.pelletList.remove(pellet)
 
     # Draw everything to the screen
     def render(self):
