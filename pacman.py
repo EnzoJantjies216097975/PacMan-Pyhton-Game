@@ -97,7 +97,7 @@ class Pacman(object):
         for pellet in pelletList:
             d = self.position - pellet.position
             dSquared = d.magnitudeSquared()
-            rSquared = (pellet.radius + self.collideRadius) ** 2
+            rSquared = (pellet.radius+self.collideRadius)**2
             if dSquared <= rSquared:
                 return pellet
         return None

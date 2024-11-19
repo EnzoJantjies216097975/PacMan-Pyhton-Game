@@ -1,3 +1,7 @@
+
+maze1.txt
+
+
 X X X X X X X X X X X X X X X X X X X X X X X X X X X X
 X X X X X X X X X X X X X X X X X X X X X X X X X X X X
 X X X X X X X X X X X X X X X X X X X X X X X X X X X X
@@ -34,3 +38,4 @@ X + . . . . . . . . . . + . . + . . . . . . . . . . + X
 X X X X X X X X X X X X X X X X X X X X X X X X X X X X
 X X X X X X X X X X X X X X X X X X X X X X X X X X X X
 X X X X X X X X X X X X X X X X X X X X X X X X X X X X
+
