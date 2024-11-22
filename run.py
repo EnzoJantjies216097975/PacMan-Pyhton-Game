@@ -24,9 +24,13 @@ class GameController(object):
         self.setBackground()                            # Set up the background
         self.nodes = NodeGroup("maze1.txt")
         self.nodes.setPortalPair((0,17), (27,17))
+        homekey = self.nodes.createHomeNodes(11.5, 14)
+        self.nodes.connectHomeNodes(homekey, (12, 14), LEFT)
+        self.nodes.connectHomeNodes(homekey, (15, 14), RIGHT)
         self.pacman = Pacman(self.nodes.getStartTempNode())    # Create a Pac-Man instance
         self.pellets = PelletGroup("maze1.txt")
-        self.ghost = Ghost(self.nodes.getStartTempNode())
+        self.ghost = Ghost(self.nodes.getStartTempNode(), self.pacman)
+        self.ghost.setSpawnNode(self.nodes.getNodeFromTiles(2+11.5, 3+14))
 
     # Handles updating the game each frame
     def update(self):
@@ -35,8 +39,14 @@ class GameController(object):
         self.ghost.update(dt)
         self.pellets.update(dt)
         self.checkPelletEvents()
+        self.checkGhostEvents()
         self.checkEvents()                  # Check for user inputs or quit events
         self.render()                       # Render all elements on the screen
+
+    def checkGhostEvents(self):
+        if self.pacman.collideGhost(self.ghost):
+            if self.ghost.mode.current is FREIGHT:
+                self.ghost.startSpawn()
 
     # Check for any events, like closing the game window
     def checkEvents(self):
@@ -49,6 +59,8 @@ class GameController(object):
         if pellet:
             self.pellets.numEaten += 1
             self.pellets.pelletList.remove(pellet)
+            if pellet.name == POWERPELLET:
+                self.ghost.startFreight()
 
     # Draw everything to the screen
     def render(self):

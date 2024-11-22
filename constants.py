@@ -20,6 +20,9 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 YELLOW = (255, 255, 0)
 RED = (255, 0, 0)
+PINK = (255,100,150)
+TEAL = (100,255,255)
+ORANGE = (230,190,40)
 
 # Movement constants to represent directions:
 STOP = 0    # Represents no movement
@@ -27,11 +30,20 @@ UP = 1      # Represents movement upward
 DOWN = -1   # Represents movement downward
 LEFT = 2    # Represents movement to the left
 RIGHT = -2  # Represents movement to the right
-
+PORTAL = 3  # Represents portal
 
 # Constant to identify Pac-Man
 PACMAN = 0
-PORTAL = 3  # Represents portal
 PELLET = 1
 POWERPELLET = 2
 GHOST = 3
+BLINKY = 4
+PINKY = 5
+INKY = 6
+CLYDE = 7
+
+
+SCATTER = 0
+CHASE = 1
+FREIGHT = 2
+SPAWN = 3
