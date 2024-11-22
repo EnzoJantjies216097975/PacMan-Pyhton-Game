@@ -2,10 +2,12 @@ import pygame
 from pygame.locals import *
 from vector import Vector2
 from constants import *
+from entity import Entity
 
 # Define the Pacman class, which will control Pac-Man's properties and behavior
 class Pacman(object):
     def __init__(self, node):
+        Entity.__init__(self, node)
         self.name = PACMAN                          # Set Pac-Man's name (identifier)
         # self.position = Vector2(200, 400)       # Set Pac-Man's initial position on the screen
         self.directions = {                         # Define possible directions Pac-Man can move in using vectors

@@ -4,6 +4,7 @@ from constants import *
 from pacman import Pacman
 from nodes import NodeGroup
 from pellets import PelletGroup
+from ghosts import Ghost
 
 # GameController manages the game's setup, events, updates, and rendering
 class GameController(object):
@@ -11,7 +12,7 @@ class GameController(object):
         pygame.init()                                                          # Initialize pygame (sets up everything we need to use pygame)
         self.screen = pygame.display.set_mode(SCREENSIZE, 0, 32)    # Create the game screen with a fixed size from constants
         self.background = None                                                  # Initialize background and clock attributes
-        self.clock = pygame.time.Clock()                                        # Initialize clock attributes / Tracks time to control game speed
+        self.clock = pygame.time.Clock()                                        # Initialize clock attributes / Tracks time to control game speed 
 
     # Sets up a black background surface for the game
     def setBackground(self):
@@ -25,11 +26,13 @@ class GameController(object):
         self.nodes.setPortalPair((0,17), (27,17))
         self.pacman = Pacman(self.nodes.getStartTempNode())    # Create a Pac-Man instance
         self.pellets = PelletGroup("maze1.txt")
+        self.ghost = Ghost(self.nodes.getStartTempNode())
 
     # Handles updating the game each frame
     def update(self):
         dt = self.clock.tick(30) / 1000.0   # Control the frame rate; `dt` is the time in seconds since the last frame
         self.pacman.update(dt)              # Update Pac-Man's position based on `dt`
+        self.ghost.update(dt)
         self.pellets.update(dt)
         self.checkPelletEvents()
         self.checkEvents()                  # Check for user inputs or quit events
@@ -53,6 +56,7 @@ class GameController(object):
         self.nodes.render(self.screen)
         self.pellets.render(self.screen)
         self.pacman.render(self.screen)                 # Then, draw Pac-Man on top of the background
+        self.ghost.render(self.screen)
         pygame.display.update()                         # Update the display to show the new frame
 
 # Main code to run the game

@@ -57,10 +57,6 @@ class NodeGroup(object):
 
     # Reading the Text File
     def readMazeFile(self, textfile):
-        with open(textfile, 'r') as file:
-            lines = file.readlines()
-            for i, lines in enumerate(lines):
-                print(f"Row {i + 1}: {len(line.split())} elements")
         return np.loadtxt(textfile, dtype='<U1')
 
     # Create Node Table

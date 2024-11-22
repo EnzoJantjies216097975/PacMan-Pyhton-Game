@@ -34,3 +34,4 @@ PACMAN = 0
 PORTAL = 3  # Represents portal
 PELLET = 1
 POWERPELLET = 2
+GHOST = 3
