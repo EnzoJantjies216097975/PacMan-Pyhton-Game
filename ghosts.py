@@ -53,6 +53,7 @@ class Ghost(Entity):
     def normalMode(self):
         self.setSpeed(100)
         self.directionMethod = self.goalDirection
+        self.homeNode.denyAccess(DOWN, self)
 
 class Blinky(Ghost):
     def __init__(self, node, pacman=None, blinky=None):

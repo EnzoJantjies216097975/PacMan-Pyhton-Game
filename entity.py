@@ -40,6 +40,13 @@ class Entity(object):
             directions.append(self.direction * -1)
         return directions
 
+    def validDirection(self, direction):
+        if direction is not STOP:
+            if self.name in self.node.access[direction]:
+                if self.node.neighbors[direction] is not None:
+                    return True
+        return False
+
     def setBetweenNodes(self, direction):
         if self.node.neighbors[direction] is not None:
             self.target = self.node.neighbors[direction]
@@ -85,15 +92,15 @@ class Entity(object):
     def setSpeed(self, speed):
         self.speed = speed * TILEWIDTH / 16
 
-    def render(self, screen):
-        if self.visible:
-            p = self.position.asInt()
-            pygame.draw.circle(screen, self.color, p, self.radius)
-
     def reset(self):
         self.setStartNode(self.startNode)
         self.direction = STOP
         self.speed
+
+    def render(self, screen):
+        if self.visible:
+            p = self.position.asInt()
+            pygame.draw.circle(screen, self.color, p, self.radius)
 
     def update(self, dt):
         self.position += self.directions[self.direction] * self.speed * dt

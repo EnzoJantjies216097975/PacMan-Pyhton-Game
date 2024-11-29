@@ -24,6 +24,18 @@ class Node(object):
             RIGHT:None,
             PORTAL: None
         }
+        self.access = {UP: [PACMAN, BLINKY, PINKY, INKY, CLYDE, FRUIT],
+                       DOWN: [PACMAN, BLINKY, PINKY, INKY, CLYDE, FRUIT],
+                       LEFT: [PACMAN, BLINKY, PINKY, INKY, CLYDE, FRUIT],
+                       RIGHT: [PACMAN, BLINKY, PINKY, INKY, CLYDE, FRUIT]}
+
+    def denyAccess(self, direction, entity):
+        if entity.name in self.access[direction]:
+            self.access[direction].remove(entity.name)
+
+    def allowAccess(self, direction, entity):
+        if entity.name not in self.access[direction]:
+            self.access[direction].append(entity.name)
 
     def render(self, screen):
         # Draw this node and its connections on the screen
@@ -88,6 +100,7 @@ class NodeGroup(object):
                     key = None
 
         # Connet Nodes Vertically
+
     def connectVertically(self, data, xoffset=0, yoffset=0):
         dataT = data.transpose()
         for col in list(range(dataT.shape[0])):
@@ -149,3 +162,36 @@ class NodeGroup(object):
         # Draw all nodes and their connections
         for node in self.nodesLUT.values():
             node.render(screen)
+
+    def denyAccess(self, col, row, direction, entity):
+        node = self.getNodeFromTiles(col, row)
+        if node is not None:
+            node.denyAccess(direction, entity)
+
+    def allowAccess(self, col, row, direction, entity):
+        node = self.getNodeFromTiles(col, row)
+        if node is not None:
+            node.allowAccess(direction, entity)
+
+    def denyAccessList(self, col, row, direction, entities):
+        for entity in entities:
+            self.denyAccess(col, row, direction, entity)
+
+    def allowAccessList(self, col, row, direction, entities):
+        for entity in entities:
+            self.allowAccess(col, row, direction, entity)
+
+    def denyHomeAccess(self, entity):
+        self.nodesLUT[self.homekey].denyAccess(DOWN, entity)
+
+    def allowHomeAccess(self, entity):
+        self.nodesLUT[self.homekey].allowAccess(DOWN, entity)
+
+    def denyHomeAccessList(self, entities):
+        for entity in entities:
+            self.denyHomeAccess(entity)
+
+    def allowHomeAccessList(self, entities):
+        for entity in entities:
+            self.allowHomeAccess(entity)
+

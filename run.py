@@ -60,6 +60,16 @@ class GameController(object):
         self.ghosts.inky.setStartNode(self.nodes.getNodeFromTiles(0+11.5, 3+14))
         self.ghosts.clyde.setStartNode(self.nodes.getNodeFromTiles(4+11.5, 3+14))
         self.ghosts.setSpawnNode(self.nodes.getNodeFromTiles(2+11.5, 3+14))
+        self.nodes.denyHomeAccess(self.pacman)
+        self.nodes.denyHomeAccessList(self.ghosts)
+        self.nodes.denyAccessList(2 + 11.5, 3 + 14, LEFT, self.ghosts)
+        self.nodes.denyAccessList(2 + 11.5, 3 + 14, RIGHT, self.ghosts)
+        self.ghosts.inky.startNode.denyAccess(RIGHT, self.ghosts.inky)
+        self.ghosts.clyde.startNode.denyAccess(LEFT, self.ghosts.clyde)
+        self.nodes.denyAccessList(12, 14, UP, self.ghosts)
+        self.nodes.denyAccessList(15, 14, UP, self.ghosts)
+        self.nodes.denyAccessList(12, 26, UP, self.ghosts)
+        self.nodes.denyAccessList(15, 26, UP, self.ghosts)
 
     # Handles updating the game each frame
     def update(self):
@@ -87,6 +97,7 @@ class GameController(object):
                 ghost.visible = False
                 self.pause.setPause(pauseTime=1, func=self.showEntities)
                 ghost.startSpawn()
+                self.nodes.allowHomeAccess(ghost)
             elif ghost.mode.current is not SPAWN:
                 if self.pacman.alive:
                     self.lives -= 1
