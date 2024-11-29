@@ -136,8 +136,9 @@ class GhostGroup(object):
             ghost.points = 200
 
     def reset(self):
-        for ghost in self:
-            ghost.reset()
+        Entity.reset(self)
+        self.points = 200
+        self.directionMethod = self.goalDirection
 
     def hide(self):
         for ghost in self:

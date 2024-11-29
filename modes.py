@@ -57,6 +57,7 @@ class ModeController(object):
             if self.entity.node == self.entity.spawnNode:
                 self.entity.normalMode()
                 self.current = self.mainmode.mode
+
     def setSpawnMode(self):
         if self.current is FREIGHT:
             self.current = SPAWN

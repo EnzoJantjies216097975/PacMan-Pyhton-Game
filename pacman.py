@@ -21,10 +21,23 @@ class Pacman(object):
         # Set Pac-Man's speed, adjusting based on tile width
         self.radius = 10                            # Radius for Pac-Man's circular shape
         self.color = YELLOW                         # Color of Pac-Man
+        self.direction = LEFT
+        self.setBetweenNode(LEFT)
         self.node = node
         self.setPosition()
         self.target = node
         self.collideRadius = 5
+        self.alive = True
+
+    def reset(self):
+        Entity.reset(self)
+        self.direction = LEFT
+        self.setBetweenNodes(LEFT)
+        self.alive = True
+
+    def die(self):
+        self.alive = False
+        self.direction = STOP
 
     def setPosition(self):
         self.position = self.node.position.copy()
